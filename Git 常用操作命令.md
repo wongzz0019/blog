@@ -38,6 +38,8 @@
 
    git branch	查看分支
 
+   git branch -r	查看远程分支
+
    git branch aa	创建分支aa
 
    git checkout aa	切换到aa分支
