@@ -133,6 +133,14 @@ ArrayList 包含了两个重要的元素：`elementData`(存放数据的数组) 
 - 数据都不可重复
 - 非线程安全
 
+
+
+### HashSet 的实现原理
+
+1. HashSet底层由HashMap实现
+2. HashSet的值存放于HashMap的key上
+3. HashMap的value统一为PRESENT
+
 ### List怎样去重？
 
 ```java
