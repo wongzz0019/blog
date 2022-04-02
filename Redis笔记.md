@@ -2289,3 +2289,106 @@ aof保存的是 appendonly.aof 文件
 
 - 两种持久化方案既可以同时使用，又可以单独使用，在某种情况下可以都不使用，具体用哪种取决于用户数据和应用决定
 - 无论使用aof或rdp，将数据持久化到硬盘都是用必要的，除了持久化外，用户还应该对持久化的文件进行备注（最好备份多个不同地方）
+
+
+
+## Redis发布订阅
+
+Redis 发布订阅(pub/sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。微信、
+微博、关注系统！
+
+Redis 客户端可以订阅任意数量的频道。
+
+订阅/发布消息图：
+
+第一个：消息发送者， 第二个：频道 第三个：消息订阅者！
+
+![image.png](https://i.loli.net/2020/12/10/DB7uzngTAlRO4by.png)
+
+下图展示了频道 channel1 ， 以及订阅这个频道的三个客户端 —— client2 、 client5 和 client1 之间的
+关系：![image.png](https://i.loli.net/2020/12/10/1hJRPkSUxTDuWsp.png)
+
+当有新消息通过 PUBLISH 命令发送给频道 channel1 时， 这个消息就会被发送给订阅它的三个客户
+端：![image.png](https://i.loli.net/2020/12/10/uzlj9fb23KLaerw.png)
+
+#### 命令
+
+这些命令被广泛用于构建即时通信应用，比如网络聊天室(chatroom)和实时广播、实时提醒等。
+
+![image.png](https://i.loli.net/2020/12/11/HWzekTxsLGJKQSt.png)
+
+#### 测试
+
+**订阅端:**
+
+````bash
+#SUBSCRIBE
+127.0.0.1:6379> SUBSCRIBE kuangshenshuo  # 订阅一个频道 kuangshenshuo 
+1) "subscribe" 
+2) "kuangshenshuo"
+3) (integer) 1
+# 等待读取推送的信息 
+1) "message"  # 消息 
+2) "kuangshenshuo"  # 那个频道的消息
+3) "hello,kuangshen"  # 消息的具体内容
+
+1) "message"
+2) "kuangshenshuo"
+3) "hello,redis"
+````
+
+**发送端:**
+
+```bash
+#PUBLISH
+127.0.0.1:6379> PUBLISH kuangshenshuo "hello,kuangshen"   # 发布者发布消息到频道！
+(integer) 1
+127.0.0.1:6379> PUBLISH kuangshenshuo "hello,redis"   # 发布者发布消息到频道！
+(integer) 1 
+127.0.0.1:6379> 
+```
+
+#### **使用场景：**
+
+1. 实时消息系统！
+2. 事实聊天！（频道当做聊天室，将信息回显给所有人即可！）
+3. 订阅，关注系统都是可以的！ 稍微复杂的场景我们就会使用 消息中间件MQ（）
+
+#### java
+
+**JedisPushSub类**
+通过继承`JedisPubSub类`重写回调方法。实现java中Redis的发布订阅。`onMessage()`:发布者发布消息时，会执行订阅者的回调方法onMessage()接收发布的消息，在此方法实现消息接收后进行自定义的业务逻辑处理。
+
+```java
+//订阅者
+public class Subscriber extends JedisPubSub {
+    @Override
+    public void onMessage(String channel, String message) {
+        System.out.println("订阅者：订阅频道:" + channel + "，收到消息:" + message);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("启动订阅者");
+        //创建Jedis
+        Jedis jedis = new Jedis("公网ip", 6379);
+        jedis.auth("密码");
+        //创建订阅者
+        Subscriber subscriber = new Subscriber();
+        //订阅信息
+        jedis.subscribe(subscriber,"Huang");
+    }
+}
+```
+
+```java
+//发送者
+public class Publisher {
+    public static void main(String[] args) {
+        Jedis jedis = new Jedis("公网ip",6379);
+        jedis.auth("密码");
+        jedis.publish("Huang","hello,i am Publisher");
+        jedis.publish("Huang","www");
+    }
+}
+```
+
