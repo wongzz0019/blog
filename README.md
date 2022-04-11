@@ -91,8 +91,35 @@
     - Git：搜 ”廖雪峰“
 - 前端
     - 掌握程度：简单了解
+    
     - 知道 HTML / CSS / JS 的概念
+    
     - 知道前端怎么跟后端交互基本就可以了
+    
+    - jquery 
+    
+      ```js
+      $("#btn").click(function(){
+          ......
+      })
+      ```
+    
+    - Ajax
+    
+      ```javascript
+      $.ajax({
+          url : "",
+          type : "",
+          data : {},
+          dataType : "json",
+          async : flase,
+          success : function(data){
+              ....
+          },
+          error : function(){
+              ....
+          }
+      })
 
 ## 优化简历
 
@@ -111,6 +138,17 @@
 
 ### 公司名字
 
+- 华仝九方
+- 希维科技
+- 利通科技
+- 谷云科技
+- 广州京微
+- 广州雷猴软件
+- 嘀卜科技
+- 店客多
+- 正易科技
+- 方寸
+- 博森科技
 - 
 
 #### 遇到的问题
