@@ -2392,3 +2392,390 @@ public class Publisher {
 }
 ```
 
+## 主从复制
+
+### 概念
+
+ 主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点（Master/Leader）,后者称为从节点（Slave/Follower）， ==数据的复制是单向的！只能由主节点复制到从节点==（主节点以写为主、从节点以读为主）。
+
+==默认情况下，每台Redis服务器都是主节点==，主节点只能有一个，从节点可多个。
+
+当主服务器宕机后，需要手动把一台从服务器切为主服务器。
+
+**主从复制的作用主要包括：**
+
+1. 数据冗余：主从复制实现了数据的热备份，是持久化之外的一种数据冗余的方式。
+2. 故障恢复：当主节点故障时，从节点可以暂时替代主节点提供服务，是一种服务冗余的方式
+3. 负载均衡：在主从复制的基础上，配合读写分离，由主节点进行写操作，从节点进行读操作，分担服务器的负载；尤其是在多读少写的场景下，通过多个从节点分担负载，提高并发量。
+4. 高可用基石：主从复制还是哨兵和集群能够实施的基础。
+
+主从复制，读写分离！80%的情况下都是在进行读操作！减缓服务器的压力！架构中经常使用！ 一主 二从！
+
+只要在公司中，主从复制就是必须要使用的，因为在真实的项目中不可能单机使用Redis！
+
+### 环境配置
+
+只配置从库，不用配置主库
+
+```bash
+120.78.166.92:6379> INFO replication	#查看当前库信息
+# Replication
+role:master	#角色
+connected_slaves:0	#没有从机
+master_failover_state:no-failover
+master_replid:7a78b6811c33929d7cd234a5ae6cc465b469d10f
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:0
+second_repl_offset:-1
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+```
+
+复制3个配置文件redisxxx-config，然后修改对应的信息
+
+1. port端口
+2. pidfile 名字
+3. logfile文件名字
+4. dbfilename dump.rdb 名字
+
+修改完毕之后，启动我们的3个redis服务器，可以通过进程信息查看！
+
+![image.png](https://i.loli.net/2020/12/11/7Qi6C4oDYBI1uHZ.png?ynotemdtimestamp=1649986735683)
+
+### 一主二从
+
+默认情况下，每台Redis服务器都是主节点；我们一般情况下只用配置从就好了！
+
+认老大！ 一主 （79）二从（80，81）
+
+```bash
+127.0.0.1:6380> SLAVEOF 127.0.0.1 6379   #  SLAVEOF host 6379  找谁当自己的老大！
+OK
+127.0.0.1:6380> info replication 
+# Replication
+role:slave  # 当前角色是从机
+master_host:127.0.0.1   # 可以的看到主机的信息 
+master_port:6379 
+master_link_status:up 
+master_last_io_seconds_ago:3 
+master_sync_in_progress:0 
+slave_repl_offset:14 
+slave_priority:100 
+slave_read_only:1 
+connected_slaves:0 master_replid:a81be8dd257636b2d3e7a9f595e69d73ff03774e
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:14
+second_repl_offset:-1 
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1 
+repl_backlog_histlen:14
+
+# 在主机中查看！
+127.0.0.1:6379> info replication
+# Replication 
+role:master connected_slaves:1  # 多了从机的配置
+slave0:ip=127.0.0.1,port=6380,state=online,offset=42,lag=1    # 多了从机的配置
+master_replid:a81be8dd257636b2d3e7a9f595e69d73ff03774e
+master_replid2:0000000000000000000000000000000000000000
+master_repl_offset:42
+second_repl_offset:-1 
+repl_backlog_active:1 
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:1 
+repl_backlog_histlen:42 
+```
+
+如果两个都配置完了，就是有两个从机
+
+![image.png](https://i.loli.net/2020/12/11/NaXd9sivbnVCc8M.png?ynotemdtimestamp=1649986735683)
+
+真实的从主配置应该在配置文件中配置，这样的话是永久的，现在这里用的是命令，暂时的！
+
+> 注意
+
+主机可以写，从机不能写只能读！主机中的所有信息和数据，都会自动从机保存！
+主机写：
+
+![image.png](https://i.loli.net/2020/12/11/gxmYE634XbqQteL.png)
+
+从机只能读取内容！
+
+![image.png](https://i.loli.net/2020/12/11/T68wEHfrcv2MC5x.png)
+
+测试：主机断开连接，从机依旧连接到主机的，但是没有写操作，这个候，主机如果回来了，从机依旧可以直接获取到主机写的信息！
+
+> 如果没有了主机，可手动指定
+
+主机断开了连接，可用` SLAVEOF no one` 让自己变成主机！其他的节点就可以手动连接到最新的这个主节点（手动）！如果这时旧主机修复了，那就重新连接！
+
+
+
+## 哨兵模式
+
+（自动选举主机的模式）
+
+> 概述
+
+能后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库。
+
+哨兵模式是一种特殊的模式，哨兵是一个独立的进程，作为进程，它会独立运行。
+
+==其原理是哨兵通过发送命令，等待Redis服务器响应，从而监控运行的多个Redis实例。==
+
+![img](https://upload-images.jianshu.io/upload_images/11320039-57a77ca2757d0924.png?imageMogr2/auto-orient/strip|imageView2/2/format/webp)
+
+这里的哨兵有两个作用
+
+- 通过发送命令，让Redis服务器返回监控其运行状态，包括主服务器和从服务器。
+- 当哨兵监测到master宕机，会自动将slave切换成master，然后通过发布订阅模式通知其他的从服
+  务器，修改配置文件，让它们切换主机。
+
+然而一个哨兵进程对Redis服务器进行监控，可能会出现问题，为此，我们可以使用多个哨兵进行监控。
+各个哨兵之间还会进行监控，这样就形成了多哨兵模式。
+
+![image.png](https://i.loli.net/2020/12/11/RLzoX5jQ4WbqkNM.png?ynotemdtimestamp=1649990117848)
+
+假设主服务器宕机，哨兵1先检测到这个结果，系统并不会马上进行failover过程，仅仅是哨兵1主观的认
+为主服务器不可用，这个现象成为 **主观下线** 。当后面的哨兵也检测到主服务器不可用，并且数量达到一
+定值时，那么哨兵之间就会进行一次投票，投票的结果由一个哨兵发起，进行failover[故障转移]操作。
+切换成功后，就会通过发布订阅模式，让各个哨兵把自己监控的从服务器实现切换主机，这个过程称为
+**客观下线**。
+
+### 搭建哨兵架构
+
+我们目前的状态是 一主二从！
+
+1、创建哨兵配置文件 sentinel.conf，并编写
+
+```bash
+# sentinel monitor 被监控的名称(自己取)  host  port  1
+
+sentinel montitor myredis 120.78.166.92  6379 1 
+
+#后面的这个数字1，代表哨兵系统里的哨兵数量。当主机挂了slave投票数要超过<后面数字的一半>才进行故障转移,选取新主机
+```
+
+2、启动哨兵！
+
+```bash
+redis-sentinel kconfig/sentinel.conf
+```
+
+```bash
+[root@kuangshen bin]# redis-sentinel kconfig/sentinel.conf
+26607:X 31 Mar 2020 21:13:10.027 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+26607:X 31 Mar 2020 21:13:10.027 # Redis version=5.0.8, bits=64,
+commit=00000000, modified=0, pid=26607, just started
+26607:X 31 Mar 2020 21:13:10.027 # Configuration loaded
+
+                _._
+            _.-``__ ''-._
+        _.-`` `. `_. ''-._       Redis 5.0.8 (00000000/0) 64 bit
+    .-`` .-```. ```\/ _.,_ ''-._
+    ( ' , .-` | `, )` _.-'|         Running in sentinel mode
+    |`-._`-...-` __...-.``-._|'        Port: 26379
+    | `-._ `._ / _.-' |             PID: 26607
+    `-._ `-._ `-./ _.-' _.-'
+    |`-._`-._ `-.__.-' _.-'_.-'|
+    | `-._`-._ _.-'_.-' |            http://redis.io
+    `-._ `-._`-.__.-'_.-' _.-'
+    |`-._`-._ `-.__.-' _.-'_.-'|
+    | `-._`-._ _.-'_.-' |
+    `-._ `-._`-.__.-'_.-' _.-'
+
+26607:X 31 Mar 2020 21:13:10.029 # WARNING: The TCP backlog setting of 511
+cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value
+of 128.
+26607:X 31 Mar 2020 21:13:10.031 # Sentinel ID is
+4c780da7e22d2aebe3bc20c333746f202ce72996
+26607:X 31 Mar 2020 21:13:10.031 # +monitor master myredis 127.0.0.1 6379 quorum
+1
+26607:X 31 Mar 2020 21:13:10.031 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @
+myredis 127.0.0.1 6379
+26607:X 31 Mar 2020 21:13:10.033 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @
+myredis 127.0.0.1 6379
+```
+
+如果Master 节点断开了，就会从从机中随机选择一个服务器！ （这里面有一个投票算法！）
+
+如果旧主机回来了，只能做新主机的从机，这就是哨兵模式的规则！
+
+哨兵日志：
+
+![image.png](https://i.loli.net/2020/12/11/N64mMouFDGfrsQT.png?ynotemdtimestamp=1649990117848)
+
+### 优点
+
+1. 哨兵集群，基于主从复制模式，所有的主从配置优点，它全有
+2. 主从可以切换，故障可以转移，系统的可用性就会更好
+3. 哨兵模式就是主从模式的升级，手动到自动，更加健壮！
+
+### 缺点
+
+1. Redis 不好啊在线扩容的，集群容量一旦到达上限，在线扩容就十分麻烦！
+2. 实现哨兵模式的配置其实是很麻烦的，里面有很多选择！
+
+> 哨兵模式的全部配置！
+
+```bash
+# Example sentinel.conf
+# 哨兵sentinel实例运行的端口 默认26379。
+port 26379
+# 哨兵sentinel的工作目录
+dir /tmp
+# 哨兵sentinel监控的redis主节点的 ip port
+# master-name 可以自己命名的主节点名字 只能由字母A-z、数字0-9 、这三个字符".-_"组成。
+# quorum 配置多少个sentinel哨兵统一认为master主节点失联 那么这时客观上认为主节点失联了
+# sentinel monitor <master-name> <ip> <redis-port> <quorum>
+sentinel monitor mymaster 127.0.0.1 6379 2
+# 当在Redis实例中开启了requirepass foobared 授权密码 这样所有连接Redis实例的客户端都要提供
+密码
+# 设置哨兵sentinel 连接主从的密码 注意必须为主从设置一样的验证密码
+# sentinel auth-pass <master-name> <password>
+sentinel auth-pass mymaster MySUPER--secret-0123passw0rd
+# 指定多少毫秒之后 主节点没有应答哨兵sentinel 此时 哨兵主观上认为主节点下线 默认30秒
+# sentinel down-after-milliseconds <master-name> <milliseconds>
+sentinel down-after-milliseconds mymaster 30000
+# 这个配置项指定了在发生failover主备切换时最多可以有多少个slave同时对新的master进行 同步，
+这个数字越小，完成failover所需的时间就越长，
+但是如果这个数字越大，就意味着越 多的slave因为replication而不可用。
+可以通过将这个值设为 1 来保证每次只有一个slave 处于不能处理命令请求的状态。
+# sentinel parallel-syncs <master-name> <numslaves>
+sentinel parallel-syncs mymaster 1
+# 故障转移的超时时间 failover-timeout 可以用在以下这些方面：
+#1. 同一个sentinel对同一个master两次failover之间的间隔时间。
+#2. 当一个slave从一个错误的master那里同步数据开始计算时间。直到slave被纠正为向正确的master那
+里同步数据时。
+#3.当想要取消一个正在进行的failover所需要的时间。
+#4.当进行failover时，配置所有slaves指向新的master所需的最大时间。不过，即使过了这个超时，
+slaves依然会被正确配置为指向master，但是就不按parallel-syncs所配置的规则来了
+# 默认三分钟
+# sentinel failover-timeout <master-name> <milliseconds>
+sentinel failover-timeout mymaster 180000
+# SCRIPTS EXECUTION
+#配置当某一事件发生时所需要执行的脚本，可以通过脚本来通知管理员，例如当系统运行不正常时发邮件通知
+相关人员。
+#对于脚本的运行结果有以下规则：
+#若脚本执行后返回1，那么该脚本稍后将会被再次执行，重复次数目前默认为10
+#若脚本执行后返回2，或者比2更高的一个返回值，脚本将不会重复执行。
+#如果脚本在执行过程中由于收到系统中断信号被终止了，则同返回值为1时的行为相同。
+#一个脚本的最大执行时间为60s，如果超过这个时间，脚本将会被一个SIGKILL信号终止，之后重新执行。
+#通知型脚本:当sentinel有任何警告级别的事件发生时（比如说redis实例的主观失效和客观失效等等），
+将会去调用这个脚本，这时这个脚本应该通过邮件，SMS等方式去通知系统管理员关于系统不正常运行的信
+息。调用该脚本时，将传给脚本两个参数，一个是事件的类型，一个是事件的描述。如果sentinel.conf配
+置文件中配置了这个脚本路径，那么必须保证这个脚本存在于这个路径，并且是可执行的，否则sentinel无
+法正常启动成功。
+#通知脚本
+# shell编程
+# sentinel notification-script <master-name> <script-path>
+sentinel notification-script mymaster /var/redis/notify.sh
+# 客户端重新配置主节点参数脚本
+# 当一个master由于failover而发生改变时，这个脚本将会被调用，通知相关的客户端关于master地址已
+经发生改变的信息。
+# 以下参数将会在调用脚本时传给脚本:
+# <master-name> <role> <state> <from-ip> <from-port> <to-ip> <to-port>
+# 目前<state>总是“failover”,
+# <role>是“leader”或者“observer”中的一个。
+# 参数 from-ip, from-port, to-ip, to-port是用来和旧的master和新的master(即旧的slave)通
+信的
+# 这个脚本应该是通用的，能被多次调用，不是针对性的。
+# sentinel client-reconfig-script <master-name> <script-path>
+sentinel client-reconfig-script mymaster /var/redis/reconfig.sh # 一般都是由运维来配
+置！
+```
+
+
+
+## 缓存穿透、击穿、雪崩
+
+Redis缓存的使用，极大的提升了应用程序的性能和效率，特别是数据查询方面。但同时，它也带来了一
+些问题。其中，最要害的问题就是数据的一致性问题。
+
+另外的一些典型问题就是，缓存穿透、缓存雪崩和缓存击穿。
+
+![image.png](https://i.loli.net/2020/12/11/aG9wODIJn7AEzej.png)
+
+
+
+### 缓存穿透（查不到）
+
+> 概念
+
+用户要查询一个数据，发现redis内存数据库没有，也就是缓存没有命中，于是向持久层数据库查询。发现也没有，于是本次查询失败。当用户很多的时候，缓存都没有命中（秒杀！），于是都去请求了持久层数据库。这会给持久层数据库造成很大的压力，这时候就相当于出现了缓存穿透。==很多用户查询数据，但这些数据没有在redis内存数据库中(缓存没有命中)，于是都向持久层数据库查询，给持久层数据库造成大压力，这就出现缓存穿透。==
+
+> 解决方案
+
+#### 布隆过滤器
+
+布隆过滤器是一种数据结构，对所有可能查询的参数以hash形式存储，在控制层先进行校验，不符合则
+丢弃，从而避免了对底层存储系统的查询压力
+
+![image.png](https://i.loli.net/2020/12/11/nhHiCqjOGVJlWUp.png?ynotemdtimestamp=1650000112400)
+
+#### 缓存空对象
+
+当存储层不命中后，即使返回的空对象也将其缓存起来，同时会设置一个过期时间，之后再访问这个数
+据将会从缓存中获取，保护了后端数据源；
+
+![image.png](https://i.loli.net/2020/12/11/pKjOfIo76eZ2wc9.png?ynotemdtimestamp=1650000112400)
+
+但是这种方法会存在两个问题：
+
+1. 如果空值能够被缓存起来，这就意味着缓存需要更多的空间存储更多的键，因为这当中可能会有很多
+   的空值的键；
+2. 即使对空值设置了过期时间，还是会存在缓存层和存储层的数据会有一段时间窗口的不一致，这对于
+   需要保持一致性的业务会有影响。
+
+
+
+### 缓存击穿（量太大，缓存过期！）
+
+> 概念
+
+缓存击穿，是指一个key非常热点，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个桶上凿开了一个洞。
+
+当某个key在过期的瞬间，有大量的请求并发访问，这类数据一般是热点数据，由于缓存过期，会同时访问数据库来查询最新数据，并且回写缓存，会导使数据库瞬间压力过大。
+
+> 解决方案
+
+#### 设置热点数据永不过期
+
+从缓存层面来看，没有设置过期时间，所以不会出现热点 key 过期后产生的问题。
+
+#### **加互斥锁**
+
+分布式锁setnx：使用分布式锁，保证对于每个key同时只有一个线程去查询后端服务，其他线程没有获得分布
+式锁的权限，因此只需要等待即可。这种方式将高并发的压力转移到了分布式锁，因此对分布式锁的考
+验很大。
+
+![image.png](https://i.loli.net/2020/12/11/x34TrX7OavufWtc.png?ynotemdtimestamp=1650000112400)
+
+### 缓存雪崩
+
+> 概念
+
+缓存雪崩，是指在某一个时间段，缓存集中过期失效。Redis 宕机！
+
+**举个简单的例子**：如果所有首页的Key失效时间都是12小时，中午12点刷新的，我零点有个秒杀活动大量用户涌入，假设当时每秒 6000 个请求，本来缓存在可以扛住每秒 5000 个请求，但是缓存当时所有的Key都失效了。此时 1 秒 6000 个请求全部落数据库，数据库必然扛不住，它会报一下警，真实情况可能DBA都没反应过来就直接挂了。此时，如果没用什么特别的方案来处理这个故障，DBA 很着急，重启数据库，但是数据库立马又被新的流量给打死了。
+
+> 解决方案
+
+#### redis高可用
+
+这个思想的含义是，既然redis有可能挂掉，那我多增设几台redis，这样一台挂掉之后其他的还可以继续
+工作，其实就是搭建的集群。（异地多活！）
+
+#### 限流降级
+
+这个解决方案的思想是，在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对
+某个key只允许一个线程查询数据和写缓存，其他线程等待。
+
+#### 数据预热
+
+数据加热的含义就是在正式部署之前，我先把可能的数据先预先访问一遍，这样部分可能大量访问的数
+据就会加载到缓存中。在即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让
+缓存失效的时间点尽量均匀。
+
