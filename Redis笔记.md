@@ -1411,9 +1411,11 @@ lettuce : 采用netty，实例可以再多个线程中进行共享，不存在�
    #配置redis  这样远程连接
    spring:
      redis:
+       database: 11
        host: 公网ip
        port: 6379
        password: 密码
+       
    ```
 
 3. 测试！
@@ -1476,10 +1478,10 @@ public class RedisConfig {
 
         // key采用String的序列化方式
         template.setKeySerializer(stringRedisSerializer);
-        // hash的key也采用String的序列化方式
-        template.setHashKeySerializer(stringRedisSerializer);
         // value序列化方式采用jackson
         template.setValueSerializer(jackson2JsonRedisSerializer);
+        // hash的key也采用String的序列化方式
+        template.setHashKeySerializer(stringRedisSerializer);
         // hash的value序列化方式采用jackson
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
 
