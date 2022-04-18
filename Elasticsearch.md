@@ -229,7 +229,7 @@ yellow open   shopping J0WlEhh4R7aDrfIc3AkwWQ   1   1          0            0   
 	"query":{
 		"match_all":{}   --->>查所有
 	},
-	"_source":["title"]  --->>字段“title”
+	"_source":["title"]  --->>指定字段“title”
 }
 ```
 
@@ -311,3 +311,420 @@ yellow open   shopping J0WlEhh4R7aDrfIc3AkwWQ   1   1          0            0   
 }
 ```
 
+### 分页查询
+
+发 GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+    "query":{
+        "match":{}
+    },
+    "from":0,  --->当前页  （页码-1）*页内数据条数
+    "size":2   --->一页多少条数据
+}
+```
+
+返回结果
+
+![image-20220417102526719](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417102526719.png)
+
+### 查询排序
+
+例如：按价格从低到高排序查询手机。 **"sort:{ }"** ，，**注意：要使用“match_all：{}**
+
+GET请求：http://127.0.0.1:9200/shopping/_search  ，请求体JSON格式如下
+
+```json
+{
+    "query":{
+        "match_all":{}
+    },
+    "sort":{
+        "price":{
+            "order":"asc"  --降序desc
+        }
+    }
+}
+```
+
+结果：
+
+![image-20220417103245288](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417103245288.png)
+
+## 入门-HTTP-多条件查询 & 范围查询
+
+### 多条件查询(注意写法)
+
+#### 且（must）
+
+查询牌子是华为 并且 价格为1499的手机 。 ==must相当于数据库的&&==
+
+GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+    "query":{
+        "bool":{
+            "must":[{
+                "match":{
+                    "category":"华为"
+                }
+            },{
+                "match":{
+                    "price":1499
+                }
+            }]
+        }
+    }
+}
+```
+
+结果：
+
+![image-20220417105045642](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417105045642.png)
+
+#### 或（should）
+
+假设想找出小米和华为的牌子。  ==should相当于数据库的||==
+
+在 Postman 中，向 ES 服务器发 GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+    "query":{
+        "bool":{
+            "should":[{
+                "match":{
+                    "category":"华为"
+                }
+            },{
+                "match":{
+                    "category":"小米"
+                }
+            }]
+        }
+    }
+}
+```
+
+结果：
+
+![image-20220417105737895](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417105737895.png)
+
+### 范围查询
+
+假设想找出小米和华为的牌子，价格大于2000元的手机。
+
+在 Postman 中，向 ES 服务器发 GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+	"query":{
+		"bool":{
+			"should":[{
+				"match":{
+					"category":"小米"
+				}
+			},{
+				"match":{
+					"category":"华为"
+				}
+			}],
+            "filter":{ 	--->过滤
+            	"range":{
+                	"price":{
+                    	"gt":2000	--->"gt"是大于
+                	}
+	            }
+    	    }
+		}
+	}
+}
+```
+
+结果：
+
+![image-20220417110501087](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417110501087.png)
+
+## 入门-HTTP-全文检索 & 完全匹配 & 高亮查询
+
+### 全文检索
+
+这功能像搜索引擎那样，如品牌输入“华红”，返回结果带回品牌有“华为”和"红米"的。
+
+在 Postman 中，向 ES 服务器发 GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+    "query":{
+        "match":{
+            "category":"华红"
+        }
+    }
+}
+```
+
+结果：
+
+![image-20220417112111901](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417112111901.png)
+
+### 完全匹配
+
+GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下： =="match_phrase"==
+
+```json
+{
+    "query":{
+        "match_phrase":{
+            "category":"红米"
+        }
+    }
+}
+```
+
+结果
+
+![image-20220417114151393](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417114151393.png)
+
+### 高亮查询
+
+ GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下： 
+
+==highlight - 高亮  ；fields - 字段==
+
+```json
+{
+    "query":{
+        "match_phrase":{
+            "category":"为"
+        }
+    },
+    "highlight":{	//highlight高亮
+        "fields":{	//fields字段
+            "category":{}  //--->高亮这字段
+        }
+    }
+}
+```
+
+结果
+
+![image-20220417114843590](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417114843590.png)
+
+## 入门-HTTP-聚合查询
+
+==aggs	聚合操作==
+
+类似与关系型数据库中的 group by，还有很多其他的聚合，例如取最大值max、平均值avg等等。
+
+按price字段进行分组操作： GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+    "aggs":{//聚合操作
+        "price_group":{//分组名称，随便起
+            "terms":{//分组	
+                "field":"price"//分组字段
+            }
+        }
+    }
+}
+```
+
+结果
+
+![image-20220417144429542](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417144429542.png)
+
+这样结果会附带原有数据的。
+
+通过JSON体设置=="size":0==，可以只返回分组结果，如下
+
+```json
+{
+    "aggs":{
+        "price_group":{
+            "terms":{
+                "field":"price"
+            }
+        }
+    },
+    "size":0 //不附带原数据显示
+}
+```
+
+GET请求， http://127.0.0.1:9200/shopping/_search ，结果
+
+![image-20220417144934166](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417144934166.png)
+
+
+
+若想对所有手机价格求**平均值**。
+
+ GET请求 ： http://127.0.0.1:9200/shopping/_search，附带JSON体如下：
+
+```json
+{
+    "aggs":{
+        "price_avg":{//名称，随意起名
+            "avg":{//求平均
+                "field":"price"
+            }
+        }
+    },
+    "size":0
+}
+```
+
+结果
+
+![image-20220417145319257](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417145319257.png)
+
+## 入门-HTTP-映射关系
+
+索引库等于数据库中的 database。
+
+建索引库(index)中的映射了，类似于数据库(database)中的表结构(table)
+
+创建数据库表需要设置字段名称，类型，长度，约束等；索引库也一样，需要知道这个类型下有哪些字段，每个字段有哪些约束信息，这就叫做映射(mapping)。
+
+先创建一个索引：
+
+![image-20220417150337745](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417150337745.png)
+
+**创建映射**
+
+==类型type：text能分词查询，keyword只能完全匹配==
+
+==索引index：ture表示能索引查询。false不能索引查询，并且会报错==
+
+```json
+#PUT http://127.0.0.1:9200/user/_mapping
+
+{
+    "properties":{
+        "name":{
+            "type":"text",  //text类型，可分词查询
+            "index":true    //true：可以索引查询
+        },
+        "sex":{
+            "type":"keyword",   //keyword类型，不可分词，只能完全匹配
+            "index":true
+        },
+        "tel":{
+            "type":"keyword",
+            "index":false   
+        }
+    }
+}
+```
+
+返回结果如下：
+
+```json
+{
+    "acknowledged": true
+}
+```
+
+**查询映射**
+
+```json
+#GET http://127.0.0.1:9200/user/_mapping
+```
+
+返回结果如下：
+
+```json
+{
+    "user": {
+        "mappings": {
+            "properties": {
+                "name": {
+                    "type": "text"
+                },
+                "sex": {
+                    "type": "keyword"
+                },
+                "tel": {
+                    "type": "keyword",
+                    "index": false
+                }
+            }
+        }
+    }
+}
+```
+
+增加数据	POST(PUT)请求： http://127.0.0.1:9200/user/_create/1001
+
+```json
+{
+	"name":"小米",
+	"sex":"男的",
+	"tel":"1111"
+}
+```
+
+返回结果如下：
+
+```json
+{
+    "_index": "user",
+    "_type": "_doc",
+    "_id": "1001",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+        "total": 2,
+        "successful": 1,
+        "failed": 0
+    },
+    "_seq_no": 0,
+    "_primary_term": 1
+}
+```
+
+查找name含有”小“数据：GET http://127.0.0.1:9200/user/_search
+
+```json
+{
+	"query":{
+		"match":{
+			"name":"小"
+		}
+	}
+}
+```
+
+返回结果
+
+![image-20220417151750690](C:\Users\Bosco\AppData\Roaming\Typora\typora-user-images\image-20220417151750690.png)
+
+查询电话
+
+```json
+# GET http://127.0.0.1:9200/user/_search
+{
+	"query":{
+		"match":{
+			"tel":"11"
+		}
+	}
+}
+```
+
+结果
+
+```json
+{
+    "error": {
+          .......
+    },
+    "status": 400
+}
+```
+
+**报错只因创建映射时"tel"的"index"为false。**
+
+## 入门-JavaAPI-环境准备
