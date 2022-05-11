@@ -108,8 +108,8 @@
     
       ```javascript
       $.ajax({
+          type : "POST/GET",
           url : "",
-          type : "",
           data : {},
           dataType : "json",
           async : flase,
