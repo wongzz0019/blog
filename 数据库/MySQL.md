@@ -4,7 +4,8 @@
 
 ### 数据库操作
 
-- 查看数据库中的表：show database；
+- 查看所有数据库：show database；
+- 查看数据库中所有的表：show tables;
 - 创建数据库：create database 数据库名；
 - 使用哪个数据库：use 数据库名；
 - 当前在哪个数据库：select database()；
