@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="多态超级集合:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/_jar</output-path>
+    <root id="archive" name="多态超级集合.jar">
+      <element id="module-output" name="多态超级集合" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/IO流拷贝文件/IO流拷贝文件.iml" filepath="$PROJECT_DIR$/IO流拷贝文件/IO流拷贝文件.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project.iml" filepath="$PROJECT_DIR$/project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/project2.iml" filepath="$PROJECT_DIR$/project2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/super-array/super-array.iml" filepath="$PROJECT_DIR$/super-array/super-array.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinzhi-hr.iml" filepath="$PROJECT_DIR$/xinzhi-hr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/两数组合并/两数组合并.iml" filepath="$PROJECT_DIR$/两数组合并/两数组合并.iml" />
+      <module fileurl="file://$PROJECT_DIR$/匿名内部类/匿名内部类.iml" filepath="$PROJECT_DIR$/匿名内部类/匿名内部类.iml" />
+      <module fileurl="file://$PROJECT_DIR$/单元测试/单元测试.iml" filepath="$PROJECT_DIR$/单元测试/单元测试.iml" />
+      <module fileurl="file://$PROJECT_DIR$/可变参数/可变参数.iml" filepath="$PROJECT_DIR$/可变参数/可变参数.iml" />
+      <module fileurl="file://$PROJECT_DIR$/多态超级集合/多态超级集合.iml" filepath="$PROJECT_DIR$/多态超级集合/多态超级集合.iml" />
+      <module fileurl="file://$PROJECT_DIR$/抽象类和抽象方法/抽象类和抽象方法.iml" filepath="$PROJECT_DIR$/抽象类和抽象方法/抽象类和抽象方法.iml" />
+      <module fileurl="file://$PROJECT_DIR$/接口/接口.iml" filepath="$PROJECT_DIR$/接口/接口.iml" />
+      <module fileurl="file://$PROJECT_DIR$/继承/继承.iml" filepath="$PROJECT_DIR$/继承/继承.iml" />
+      <module fileurl="file://$PROJECT_DIR$/英雄游戏/英雄游戏.iml" filepath="$PROJECT_DIR$/英雄游戏/英雄游戏.iml" />
+      <module fileurl="file://$PROJECT_DIR$/超级链表/超级链表.iml" filepath="$PROJECT_DIR$/超级链表/超级链表.iml" />
+      <module fileurl="file://$PROJECT_DIR$/队列和栈/队列和栈.iml" filepath="$PROJECT_DIR$/队列和栈/队列和栈.iml" />
+      <module fileurl="file://$PROJECT_DIR$/面向对象注册并储存/面向对象注册并储存.iml" filepath="$PROJECT_DIR$/面向对象注册并储存/面向对象注册并储存.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/10、观线程状态/10、观线程状态.iml" filepath="$PROJECT_DIR$/10、观线程状态/10、观线程状态.iml" />
+      <module fileurl="file://$PROJECT_DIR$/11、线程优先级/11、线程优先级.iml" filepath="$PROJECT_DIR$/11、线程优先级/11、线程优先级.iml" />
+      <module fileurl="file://$PROJECT_DIR$/12、守护线程/12、守护线程.iml" filepath="$PROJECT_DIR$/12、守护线程/12、守护线程.iml" />
+      <module fileurl="file://$PROJECT_DIR$/13、同步方法及同步块/13、同步方法及同步块.iml" filepath="$PROJECT_DIR$/13、同步方法及同步块/13、同步方法及同步块.iml" />
+      <module fileurl="file://$PROJECT_DIR$/14、CopyOnWriteArrayList/14、CopyOnWriteArrayList.iml" filepath="$PROJECT_DIR$/14、CopyOnWriteArrayList/14、CopyOnWriteArrayList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/15、死锁/15、死锁.iml" filepath="$PROJECT_DIR$/15、死锁/15、死锁.iml" />
+      <module fileurl="file://$PROJECT_DIR$/16、Lock锁/16、Lock锁.iml" filepath="$PROJECT_DIR$/16、Lock锁/16、Lock锁.iml" />
+      <module fileurl="file://$PROJECT_DIR$/17、管程法/17、管程法.iml" filepath="$PROJECT_DIR$/17、管程法/17、管程法.iml" />
+      <module fileurl="file://$PROJECT_DIR$/18、线程池/18、线程池.iml" filepath="$PROJECT_DIR$/18、线程池/18、线程池.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1、继承Thread类.iml" filepath="$PROJECT_DIR$/1、继承Thread类.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2、龟兔赛跑/2、龟兔赛跑.iml" filepath="$PROJECT_DIR$/2、龟兔赛跑/2、龟兔赛跑.iml" />
+      <module fileurl="file://$PROJECT_DIR$/3、实现Callable接口(了解)/3、实现Callable接口(了解).iml" filepath="$PROJECT_DIR$/3、实现Callable接口(了解)/3、实现Callable接口(了解).iml" />
+      <module fileurl="file://$PROJECT_DIR$/4、静态代理模式/4、静态代理模式.iml" filepath="$PROJECT_DIR$/4、静态代理模式/4、静态代理模式.iml" />
+      <module fileurl="file://$PROJECT_DIR$/5、Lambda表达式/5、Lambda表达式.iml" filepath="$PROJECT_DIR$/5、Lambda表达式/5、Lambda表达式.iml" />
+      <module fileurl="file://$PROJECT_DIR$/6、线程停止/6、线程停止.iml" filepath="$PROJECT_DIR$/6、线程停止/6、线程停止.iml" />
+      <module fileurl="file://$PROJECT_DIR$/7、线程休眠_sleep/7、线程休眠_sleep.iml" filepath="$PROJECT_DIR$/7、线程休眠_sleep/7、线程休眠_sleep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/8、线程礼让_yield/8、线程礼让_yield.iml" filepath="$PROJECT_DIR$/8、线程礼让_yield/8、线程礼让_yield.iml" />
+      <module fileurl="file://$PROJECT_DIR$/9、线程强制执行_join/9、线程强制执行_join.iml" filepath="$PROJECT_DIR$/9、线程强制执行_join/9、线程强制执行_join.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiThread.iml" filepath="$PROJECT_DIR$/MultiThread.iml" />
+    </modules>
+  </component>
+</project>
