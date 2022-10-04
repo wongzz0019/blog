@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--方式三    -->
+    <bean id="annotation" class="com.hzz.diy.AnnotationPointCut"/>
+    <!--开启注解支持!-->
+    <aop:aspectj-autoproxy/>
+
+
+
+    <!--注册bean-->
+    <bean id="userServiceImpl" class="com.hzz.service.UserServiceImpl"/>
+    <bean id="beforeLog" class="com.hzz.log.BeforeLog"/>
+    <bean id="afterLog" class="com.hzz.log.AfterLog"/>
+
+    <!--方式一：使用原生Spring API接口-->
+    <!--配置aop:需要导入aop的约束-->
+<!--    <aop:config>-->
+<!--        &lt;!&ndash;切入点(pointcut)。id:切入点的昵称,随便写。 expression:表达式。 execution(要执行的位置！*(修饰符)*(返回类型)*(类名)*(方法名)*(参数))&ndash;&gt;-->
+<!--        <aop:pointcut id="pointcut" expression="execution(* com.hzz.service.UserServiceImpl.*(..))"/>-->
+
+<!--        &lt;!&ndash;advisor:环绕通知，执行环绕增加。 advice-ref:引用哪个方法。 pointcut-ref:引用哪个切入点 &ndash;&gt;-->
+<!--        <aop:advisor advice-ref="beforeLog" pointcut-ref="pointcut"/>-->
+<!--        <aop:advisor advice-ref="afterLog" pointcut-ref="pointcut"/>-->
+<!--    </aop:config>-->
+
+
+    <!--方式二：自定义类。也要导入aop约束-->
+<!--    <bean id="diyPointcut" class="com.hzz.diy.DiyPointcut"/>-->
+
+<!--    <aop:config>-->
+<!--        &lt;!&ndash;自定义切面，ref:要引用的自定义类&ndash;&gt;-->
+<!--        <aop:aspect ref="diyPointcut">-->
+<!--            &lt;!&ndash;切入点&ndash;&gt;-->
+<!--            <aop:pointcut id="pointcut2" expression="execution(* com.hzz.service.UserServiceImpl.*(..))"/>-->
+<!--            &lt;!&ndash;通知&ndash;&gt;-->
+<!--            <aop:before method="before" pointcut-ref="pointcut2"/>-->
+<!--            <aop:after method="after" pointcut-ref="pointcut2"/>-->
+<!--        </aop:aspect>-->
+<!--    </aop:config>-->
+
+
+</beans>

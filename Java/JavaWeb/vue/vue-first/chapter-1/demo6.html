@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <!--组件：传递给组件中的值：props-->
+    <!--v-bind:i="item"：将遍历的 item 绑定到组件props定义的 it 属性上-->
+    <hzz v-for="item in items" v-bind:it="item"></hzz>
+
+</div>
+
+
+<!--    1.导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+
+    //定义一个Vue组件component Vue.component("自定义组件名",{template: '<li>hello</li>'});
+    Vue.component("hzz",{
+        props: ['it'],
+        template: '<li>{{it}}</li>'
+    });
+
+    //实例化vue
+    var vm = new Vue({
+        el : "#app",
+        data: {
+            items: ['java','python','linux']
+        }
+    });
+</script>
+</body>
+</html>

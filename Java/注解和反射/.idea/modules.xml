@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/1、元注解/1、元注解.iml" filepath="$PROJECT_DIR$/1、元注解/1、元注解.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2、反射/2、反射.iml" filepath="$PROJECT_DIR$/2、反射/2、反射.iml" />
+      <module fileurl="file://$PROJECT_DIR$/3、所有类型的Class对象/3、所有类型的Class对象.iml" filepath="$PROJECT_DIR$/3、所有类型的Class对象/3、所有类型的Class对象.iml" />
+      <module fileurl="file://$PROJECT_DIR$/注解和反射.iml" filepath="$PROJECT_DIR$/注解和反射.iml" />
+    </modules>
+  </component>
+</project>

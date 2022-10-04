@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.hzz.dao.UserMapper">
+
+    <!-- select查询语句   -->
+    <!--id="对应的接口方法名"  resultType="返回的结果类型  全限定名"  resultType:返回单个，resultMap:返回多个"      -->
+    <select id="getUserList" resultType="com.hzz.pojo.User">
+        select * from mybatis.user
+    </select>
+
+    <!--id="绑定的接口方法名"  parameterType="参数类型  全限定名"  resultType="返回类型"-->
+    <select id="getUserById" parameterType="int" resultType="com.hzz.pojo.User">
+        select * from mybatis.user where id = #{id}
+    </select>
+
+    <!--对象中的属性，可以直接取出来，名称要一致-->
+    <insert id="addUser" parameterType="com.hzz.pojo.User">
+        insert into mybatis.user (id,name,pwd) values (#{id},#{name},#{pwd})
+    </insert>
+
+    
+    <update id="updateUser" parameterType="com.hzz.pojo.User" >
+        update mybatis.user set name=#{name},pwd=#{pwd} where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id=#{id}
+    </delete>
+
+<!-- =====================================================================================   -->
+
+    <!--万能map查询单个用户-->
+    <select id="getUserById2" parameterType="map" resultType="com.hzz.pojo.User">
+        select * from user where id=#{userid} and name=#{username}
+    </select>
+
+    <!--    万能Map插入，参数类型是map。对象中的属性,可以直接取出来,传递map的key-->
+    <insert id="addUser2" parameterType="map">
+        insert into user (id,name) values (#{userid},#{username})
+    </insert>
+    <!--map 修改   注意参数类型不要错-->
+    <update id="updateUser2" parameterType="map">
+        update user set id=#{userid} where name=#{name}
+    </update>
+
+<!-- =====================================================================================   -->
+
+    <!-- 模糊查询 like %
+         1.select * from mybatis.user where name like #{value}
+         2.select * from mybatis.user where name like "%"#{value}"%"   -->
+    <select id="getUserLike" parameterType="string" resultType="com.hzz.pojo.User">
+        select * from mybatis.user where name like #{value}
+    </select>
+
+</mapper>

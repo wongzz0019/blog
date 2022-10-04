@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="92b6888a-3537-471c-97dc-9dcc2ff081e3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="29BJK3CEh3lukqloym7vAJ2kR5Y" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hzz" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.EStest_Doc_Query">
+    <configuration name="EStest_Doc_Delete" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hzz.EStest_Doc_Delete" />
+      <module name="es-test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hzz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EStest_Doc_Delete_Batch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hzz.EStest_Doc_Delete_Batch" />
+      <module name="es-test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hzz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EStest_Doc_Get" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hzz.EStest_Doc_Get" />
+      <module name="es-test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hzz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EStest_Doc_Insert_Batch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hzz.EStest_Doc_Insert_Batch" />
+      <module name="es-test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hzz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EStest_Doc_Query" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hzz.EStest_Doc_Query" />
+      <module name="es-test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hzz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.EStest_Doc_Query" />
+        <item itemvalue="Application.EStest_Doc_Insert_Batch" />
+        <item itemvalue="Application.EStest_Doc_Delete_Batch" />
+        <item itemvalue="Application.EStest_Doc_Delete" />
+        <item itemvalue="Application.EStest_Doc_Get" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="92b6888a-3537-471c-97dc-9dcc2ff081e3" name="Default Changelist" comment="" />
+      <created>1652580477538</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1652580477538</updated>
+      <workItem from="1652580481654" duration="20826000" />
+      <workItem from="1652857292803" duration="1184000" />
+      <workItem from="1657683305504" duration="111000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="285" y="0" width="1251" height="784" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1652586841726">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="285" y="0" width="1251" height="784" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1652586841726" />
+    <state x="790" y="0" key="#com.intellij.ide.util.MemberChooser" timestamp="1652592958654">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="790" y="0" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1652592958654" />
+    <state x="207" y="0" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1652581162124">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="207" y="0" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.0.1536.834@0.0.1536.834" timestamp="1652581162124" />
+    <state x="781" y="27" key="FileChooserDialogImpl" timestamp="1652709109606">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="781" y="27" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1652709109606" />
+    <state width="752" height="251" key="GridCell.Tab.0.bottom" timestamp="1652716833462">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="752" height="251" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1652716833462" />
+    <state width="752" height="251" key="GridCell.Tab.0.center" timestamp="1652716833461">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="752" height="251" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1652716833461" />
+    <state width="752" height="251" key="GridCell.Tab.0.left" timestamp="1652716833461">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="752" height="251" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1652716833461" />
+    <state width="752" height="251" key="GridCell.Tab.0.right" timestamp="1652716833462">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="752" height="251" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1652716833462" />
+    <state x="0" y="0" key="SettingsEditor" timestamp="1652581220049">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="0" y="0" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1652581220049" />
+    <state x="0" y="0" key="new project wizard" timestamp="1652580579694">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="0" y="0" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1652580579694" />
+  </component>
+</project>

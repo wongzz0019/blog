@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--configuration核心配置文件-->
+<configuration>
+
+    <!--标准的日志工厂-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--别名-->
+    <typeAliases>
+        <package name="com.hzz.pojo"/>
+    </typeAliases>
+
+
+
+</configuration>

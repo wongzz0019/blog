@@ -1,0 +1,18 @@
+spring:
+  #关闭模板引擎的缓存
+  thymeleaf:
+    cache: false
+  #绑定国际化配置文件的真实位置
+  messages:
+    basename: i18n.login
+  #时间日期格式化（如果不写默认为 yyyy/MM/dd）
+  mvc:
+    format:
+      date: yyyy-MM-dd
+
+# [ip地址]:[端口号]/hzz 的API. 没设置这个默认是 [ip地址]:[端口号]/
+#server:
+#  servlet:
+#    context-path: /hzz
+
+

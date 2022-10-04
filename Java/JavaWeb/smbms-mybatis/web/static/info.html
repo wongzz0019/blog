@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>提示</title>
+</head>
+<body>
+    <h1>操作成功</h1>
+    <div><span id="time">3</span>秒后自动跳转</div>
+    <script>
+        var i = 3;
+        setInterval(() => {
+			if(i <= 0){
+                location = "#";
+            }
+            document.getElementById("time").innerHTML = --i;
+        }, 1000);
+        
+    </script>
+</body>
+</html>

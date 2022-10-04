@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--configuration核心配置文件-->
+<configuration>
+    <!--引入外部配置文件-->
+    <properties resource="db.properties"/>
+
+    <settings>
+        <!--标准的日志工厂实现-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--可以给实体类起别名  type="实体类的全限定名" aliases="新起的别名"-->
+    <typeAliases>
+        <typeAlias type="com.hzz.pojo.User" alias="User"/>
+    </typeAliases>
+
+
+    <environments default="development">
+    <!--运行环境可以有多套，default="运行环境id"-->
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${user}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--绑定接口-->
+    <mappers>
+        <mapper class="com.hzz.dao.UserMapper"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--view层 模板-->
+<div id="vue">
+
+    <div>{{info.name}}</div>
+    <div>{{info.address.country}}</div>
+
+<!--得用v-bind绑定才能显示    -->
+    <a v-bind:href="info.url">点我跳转</a>
+</div>
+
+
+<!--    1.导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<!--导入axios.js-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el : "#vue",
+        //注意：之前的data是属性
+        data(){
+            return{
+                //请求的返回参数合适，必须和json字符串一样
+                info: {
+                    name: null,
+                    address: {
+                        street: null,
+                        city: null,
+                        country: null
+                    },
+                    url: null
+                }
+            }
+        },
+        mounted(){//钩子函数 链式编程 ES6新特性
+            axios.get('../data.json').then(response=>(this.info=response.data));
+        }
+
+    });
+</script>
+</body>
+</html>

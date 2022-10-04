@@ -1,0 +1,25 @@
+{
+  "name": "hzz",
+  "age": "18",
+  "sex": "男",
+  "url":"https://www.baidu.com",
+  "address": {
+    "street": "广州",
+    "city": "广东",
+    "country": "中国"
+  },
+  "links": [
+    {
+      "name": "bilibili",
+      "url": "https://www.bilibili.com"
+    },
+    {
+      "name": "baidu",
+      "url": "https://www.baidu.com"
+    },
+    {
+      "name": "cqh video",
+      "url": "https://www.4399.com"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+#SpringBoot 所有的配置类，都有一个自动配置类  RedisAutoConfiguration
+#自动配置类都会绑定一个 properties 配置文件  RedisProperties
+
+#配置redis
+spring:
+  redis:
+    host: 120.78.166.92
+    port: 6379
+    password: hzz2956195

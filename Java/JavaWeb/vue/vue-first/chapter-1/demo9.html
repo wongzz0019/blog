@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--view层 模板-->
+<div id="app">
+    <!--通过组件和插槽完成！    -->
+    <!--在组件中用插槽属性slot绑定对应的组件。 v-bind:组件props参数=“data中的数据”，v-bind简写:-->
+    <todo>
+        <todo-title slot="todo-title" :tit="title"></todo-title>
+        <todo-items slot="todo-items"
+                    v-for="(item,index) in todoItems"
+                    v-bind:ite="item" :index="index"
+                    v-on:delect="removeItems(index)"></todo-items>
+                    <!-- v-on:delect自定义事件绑定vue实例中的方法。delect作参数传给自定义事件分发，removeItems(index)是vue实例的方法 -->
+    </todo>
+</div>
+
+
+<!--    1.导入vue.js-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    //定义组件
+    Vue.component("todo",{ //插槽:<slot></slot>。 通过name属性绑定组件名:<slot name="todo-title"></slot>
+        template: '<div>\
+                    <slot name="todo-title"></slot>\
+                    <ul>\
+                        <slot name="todo-items"></slot>\
+                    </ul>\
+                    </div>'
+    });
+
+    Vue.component("todo-title",{
+        props: ['tit'], //通过props传参
+        template: '<p>{{tit}}</p>'
+    });
+
+    Vue.component("todo-items",{
+        props: ['ite','index'],
+        template: '<li>{{index}}----{{ite}} <button @click="remove">删除</button></li>',//定义个事件
+        methods: {
+            //remove方法
+            remove: function () {
+                //this.$emit('xxx') 自定义事件分发。参数是自定义事件名。
+                //作用：通过自定义事件来绑定vue实例中的方法！
+                this.$emit('delect')
+            }
+        }
+    });
+
+    //vue实例
+    var vm = new Vue({
+        el : "#app",
+        data: {
+            title: '课程',
+            todoItems: ['java','php','python']
+        },
+        methods: {
+            removeItems: function (index) {//通过传入下标index来删除
+                console.log("删除了"+this.todoItems[index]+"OK");
+                this.todoItems.splice(index,1);//splice是js的删除函数,从index删除,一次只删除1个
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

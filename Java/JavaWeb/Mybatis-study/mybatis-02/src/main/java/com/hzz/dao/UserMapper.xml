@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.hzz.dao.UserMapper">
+
+    <!-- select查询语句   -->
+    <!--id="对应的接口方法名"  resultType="返回的结果类型  全限定名"  resultType:返回单个，resultMap:返回多个"      -->
+    <select id="getUserList" resultType="User">
+        select * from mybatis.user
+    </select>
+
+    <!--id="绑定的接口方法名"  parameterType="参数类型  全限定名"  resultType="返回类型"-->
+    <select id="getUserById" parameterType="int" resultType="com.hzz.pojo.User">
+        select * from mybatis.user where id = #{id}
+    </select>
+
+    <!--对象中的属性，可以直接取出来，名称要一致-->
+    <insert id="addUser" parameterType="com.hzz.pojo.User">
+        insert into mybatis.user (id,name,pwd) values (#{id},#{name},#{pwd})
+    </insert>
+
+    
+    <update id="updateUser" parameterType="com.hzz.pojo.User" >
+        update mybatis.user set name=#{name},pwd=#{pwd} where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id=#{id}
+    </delete>
+
+</mapper>

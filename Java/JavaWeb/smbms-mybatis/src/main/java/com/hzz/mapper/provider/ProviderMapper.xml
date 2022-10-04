@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzz.mapper.provider.ProviderMapper">
+
+    <insert id="add" parameterType="provider">
+        insert into smbms_provider(proCode,proName,proDesc,proContact,proPhone,proAddress,
+                                    proFax,createdBy,creationDate,modifyDate,modifyBy)
+
+        values(#{proCode},#{proName},#{proDesc},#{proContact},#{proPhone},#{proAddress},
+                #{proFax},#{createdBy},#{creationDate},#{modifyDate},#{modifyBy})
+    </insert>
+
+    <select id="getProviderList" resultType="provider" parameterType="provider">
+        select * from smbms_provider
+        <where>
+            <if test="proName != null">proName = #{proName}</if>
+            <if test="proCode != null">and proName =#{proCode}</if>
+        </where>
+        order by creationDate DESC
+        limit #{form},#{pageSize}
+    </select>
+
+    <select id="getProList" resultType="provider">
+        select * from smbms_provider
+    </select>
+
+    <select id="getProviderCount" parameterType="String" resultType="int">
+        select count(*) from smbms_provider
+        <where>
+            <if test="proName != null">proName like concat('%',#{proName},'%')</if>
+            <if test="proCode != null">and proCode like concat('%',#{proCode},'%')</if>
+        </where>
+    </select>
+
+    <delete id="deleteProviderById" parameterType="Integer">
+        delete from smbms_provider where id = #{id}
+    </delete>
+
+    <select id="getProviderById" parameterType="Integer" resultType="provider">
+        select * from smbms_provider where id = #{id}
+    </select>
+
+    <update id="modify" parameterType="provider">
+        update smbms_provider
+        <set>
+            <if test="proCode != null"> proCode = #{proCode},</if>
+            <if test="proName != null"> proName = #{proName},</if>
+            <if test="proDesc != null"> proDesc = #{proDesc},</if>
+            <if test="proContact != null"> proContact = #{proContact},</if>
+            <if test="proPhone != null"> proPhone = #{proPhone},</if>
+            <if test="proAddress != null"> proAddress = #{proAddress},</if>
+            <if test="proFax != null"> proFax = #{proFax},</if>
+            <if test="modifyDate != null">modifyDate  = #{modifyDate},</if>
+            <if test="modifyBy != null"> modifyBy = #{modifyBy}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,34 @@
+## k: y
+##对空格的要求十分高
+##普通的key-value
+#
+##可以注入到我们的配置类中
+#
+#name: hzz
+#
+##对象
+#student:
+#  name: hzz
+#  age: 3
+#
+##对象行内写法
+#student2: {name: hzz,age: 3}
+#
+##数组
+#pets:
+#  - cat
+#  - dog
+#  - pig
+#  -
+#pets2: [cat,dog,pig]
+
+person:
+  name: hzz
+  age: 3
+  happy: true
+  birth: 2021/12/28
+  maps: {k1: v1,k2: v2}
+  lists: [code,music,book]
+  dog:
+    name: 旺财
+    age: 1

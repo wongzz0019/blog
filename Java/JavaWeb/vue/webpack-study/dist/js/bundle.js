@@ -1,0 +1,1 @@
+(()=>{var t={645:(t,i)=>{i.sayHi=function(){document.write("<h1>你好</h1>>")},i.sayHi2=function(){document.write("<h1>你好</h1>>")},i.sayHi3=function(){document.write("<h1>你好</h1>>")},i.sayHi4=function(){document.write("<h1>你好</h1>>")}}},i={};(function n(r){var e=i[r];if(void 0!==e)return e.exports;var o=i[r]={exports:{}};return t[r](o,o.exports,n),o.exports})(645).sayHi()})();

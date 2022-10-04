@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    
+    <context:component-scan base-package="com.hzz.service"/>
+
+<!--    <bean id="billServiceImpl" class="com.hzz.service.bill.BillServiceImpl">-->
+<!--        <property name="billMapper" ref="billMapper"/>-->
+<!--    </bean>-->
+<!--    <bean id="providerServiceImpl" class="com.hzz.service.provider.ProviderServiceImpl">-->
+<!--        <property name="providerMapper" ref="providerMapper"/>-->
+<!--    </bean>-->
+<!--    <bean id="roleServiceImpl" class="com.hzz.service.role.RoleServiceImpl">-->
+<!--        <property name="roleMapper" ref="roleMapper"/>-->
+<!--    </bean>-->
+<!--    <bean id="userServiceImpl" class="com.hzz.service.user.UserServiceImpl">-->
+<!--        <property name="userMapper" ref="userMapper"/>-->
+<!--    </bean>-->
+
+    <!--配置声明事务 用作数据库操作-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <!--xml方式  -->
+    <!---->
+
+    <!--XML方式   结合AOP实现事务织入-->
+    <!--配置事务通知，需要导入tx约束。id:事务通知名，transaction-manager:绑定声明式事务-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="modify" propagation="REQUIRED"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="roleCodeIsExist" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--配置事务织入-->
+    <aop:config>
+        <!--定义一个切入点，id:切入点名，expression:切入点位置-->
+        <aop:pointcut id="txPointcut" expression="execution(* com.hzz.service.*.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>
+
+
+
+</beans>

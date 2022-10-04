@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--1.指定要扫描的包，这个包下的注解就会生效-->
+    <context:component-scan base-package="com.hzz.service"/>
+
+<!--    &lt;!&ndash;2.将我们的所有业务，注入到Spring，可以通过配置，或者注解实现@Service&ndash;&gt;-->
+<!--    <bean id="bookServiceImpl" class="com.hzz.service.BookServiceImpl">-->
+<!--        <property name="bookMapper" ref="bookMapper"/>-->
+<!--    </bean>-->
+
+    <!--3.配置声明式事务 ，用set方法注入数据源dataSource-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--4.aop事务支持-->
+
+</beans>
+
+

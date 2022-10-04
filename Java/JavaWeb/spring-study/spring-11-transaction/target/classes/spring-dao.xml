@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 数据源   -->
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!--sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--获取数据源，连接数据库-->
+        <property name="dataSource" ref="datasource"/>
+        <!--绑定mybatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--注册Mapper.xml文件-->
+        <property name="mapperLocations" value="classpath:com/hzz/mapper/*.xml"/>
+    </bean>
+
+    <!--sqlSession-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <!--使用构造器注入，因为没用set方法-->
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+
+    <!--配置声明式事务 ，用set方法注入数据源dataSource-->
+    <bean id="transcationManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
+
+<!--    &lt;!&ndash;注解方式，，，@Tran.....&ndash;&gt;-->
+<!--    <aop:config>-->
+<!--        <aop:pointcut id="ranscationCut" expression="execution(* com.hzz.mapper.*.*(..))"/>-->
+<!--    </aop:config>-->
+
+
+    <!--XML方式   结合AOP实现事务织入-->
+    <!--配置事务通知，需要导入tx约束。id:事务通知名，transaction-manager:绑定声明式事务-->
+    <tx:advice id="txAdvice" transaction-manager="transcationManager">
+        <tx:attributes>
+            <tx:method name="addUser" propagation="REQUIRED"/>
+            <tx:method name="deleteUser" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+<!--    &lt;!&ndash;配置事务织入&ndash;&gt;-->
+<!--    <aop:config>-->
+<!--        &lt;!&ndash;定义一个切入点，id:切入点名，expression:切入点位置&ndash;&gt;-->
+<!--        <aop:pointcut id="txPointcut" expression="execution(* com.hzz.mapper.*.*(..))"/>-->
+<!--        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>-->
+<!--    </aop:config>-->
+
+</beans>

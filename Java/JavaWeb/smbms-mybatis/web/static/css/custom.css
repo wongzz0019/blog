@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+}
+
+.list-group-item h5:before, .list-group-item h5:after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 3px solid blue;
+    background-color: cadetblue;
+    border-radius: 50%;
+    position: relative;
+    top: -4px;
+}
+
+.list-group-item h5:before{
+    margin-right: 10px;
+}
+
+.list-group-item h5:after{
+    margin-left: 10px;
+}
+
+.list-group-item a {
+    text-decoration: none;
+}

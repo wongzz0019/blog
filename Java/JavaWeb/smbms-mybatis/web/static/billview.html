@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页 - 超市订单管理系统</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/brands.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/solid.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a href="index.html" class="navbar-brand text-white"><i class="fas fa-shopping-cart"></i> 超市订单管理系统</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+            <div class="nav-item nav-link text-white">下午好！ <span class="text-warning">admin</span>,欢迎你！</div>
+            <a href="login.html" class="nav-item btn btn-success">退出</a>
+        </div>
+    </div>
+</nav>
+<div class="d-flex justify-content-between p-1 bg-light  text-secondary small border-bottom" style="height: 27px;">
+    <div class="ml-3">
+        <i class="fas fa-clock"></i> 2019年06月07日 16:18:58 星期五
+    </div>
+    <div class="mr-3"> 温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</div>
+</div>
+<div class="d-flex" style="height: calc(100% - 70px - 27px - 37px);">
+
+    <div class="bg-light border-right">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h5 class="m-0 bg-primary pl-3 pr-3 pt-2 pb-2 rounded text-white">功能列表</h5>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="billlist.html"><i class="fas fa-list-alt"></i> 订单管理</a>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="providerlist.html"><i class="fas fa-truck"></i> 供应商管理</a>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="userlist.html"><i class="fas fa-users"></i> 用户管理</a></li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="pwdmodify.html"><i class="fas fa-key"></i> 密码修改</a>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="login.html"><i class="fas fa-sign-out-alt"></i> 退出系统</a></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="flex-fill">
+        <div class="bg-light rounded-bottom ml-3 mr-3 border border-top-0">
+            <p class="nav-link p-1 mb-0 "><i class="fas fa-home"></i>
+                <small>你现在所在的位置是: <span class="text-primary">订单管理页面 >> 信息查看</span></small>
+            </p>
+        </div>
+        <div class="mr-5 ml-5 mt-4 p-5 border border-info">
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">订单编号：</div>
+                <div class="col-10 text-warning font-weight-bolder">BILL2016_001</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">商品名称：</div>
+                <div class="col-10 text-warning font-weight-bolder">洗发水、护发素</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">商品单位：</div>
+                <div class="col-10 text-warning font-weight-bolder">瓶</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">商品数量：</div>
+                <div class="col-10 text-warning font-weight-bolder">100</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">总金额：</div>
+                <div class="col-10 text-warning font-weight-bolder">25000.00</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">供应商：</div>
+                <div class="col-10 text-warning font-weight-bolder">北京三木堂商贸有限公司</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-right font-weight-bolder">是否付款：</div>
+                <div class="col-10 text-warning font-weight-bolder">未付款</div>
+            </div>
+            <div class="row mt-4">
+                <div class="offset-2">
+                    <a href="javascript:history.go(-1);" class="btn btn-primary pl-3 pr-3">返回</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<footer class="bg-primary p-3 text-center text-white small fixed-bottom" style="height: 51px">版权归北大青鸟</footer>
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

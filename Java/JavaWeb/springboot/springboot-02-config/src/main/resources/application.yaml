@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: prod #指定使用哪个环境
+
+---
+
+server:
+  port: 8082
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+
+server:
+  port: 8083
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+---
+
+server:
+  port: 8084
+spring:
+  config:
+    activate:
+      on-profile: test

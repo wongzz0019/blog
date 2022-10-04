@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页 - 超市订单管理系统</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/brands.min.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/solid.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a href="index.html" class="navbar-brand text-white"><i class="fas fa-shopping-cart"></i> 超市订单管理系统</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+            <div class="nav-item nav-link text-white">下午好！ <span class="text-warning">admin</span>,欢迎你！</div>
+            <a href="login.html" class="nav-item btn btn-success">退出</a>
+        </div>
+    </div>
+</nav>
+<div class="d-flex justify-content-between p-1 bg-light  text-secondary small border-bottom" style="height: 27px;">
+    <div class="ml-3">
+        <i class="fas fa-clock"></i> 2019年06月07日 16:18:58 星期五
+    </div>
+    <div class="mr-3"> 温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</div>
+</div>
+<div class="d-flex" style="height: calc(100% - 70px - 27px - 37px);">
+
+    <div class="bg-light border-right">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h5 class="m-0 bg-primary pl-3 pr-3 pt-2 pb-2 rounded text-white">功能列表</h5>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="billlist.html"><i class="fas fa-list-alt"></i> 订单管理</a>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="providerlist.html"><i class="fas fa-truck"></i> 供应商管理</a>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="userlist.html"><i class="fas fa-users"></i> 用户管理</a></li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="pwdmodify.html"><i class="fas fa-key"></i> 密码修改</a>
+            </li>
+            <li class="list-group-item pl-4 pr-4 list-group-item-action">
+                <a href="login.html"><i class="fas fa-sign-out-alt"></i> 退出系统</a></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="flex-fill">
+        <div class="bg-light rounded-bottom ml-3 mr-3 border border-top-0">
+            <p class="nav-link p-1 mb-0 "><i class="fas fa-home"></i>
+                <small>你现在所在的位置是: <span class="text-primary">用户管理页面</span></small>
+            </p>
+        </div>
+        <div class="pt-2 pb-2 pl-2 ml-3 mr-3 d-flex justify-content-between">
+            <form action="" method="get" class="form-inline">
+                <div class="form-group ml-2 mr-2">
+                    <label for="userName">用户名：</label>
+                    <input type="text" class="form-control form-control-sm" id="userName" name="userName">
+                </div>
+                <div class="form-group ml-2 mr-2">
+                    <label for="userRole">用户角色：</label>
+                    <select name="userRole" id="userRole" class="form-control form-control-sm">
+                        <option value="-1">--请选择--</option>
+                    </select>
+                </div>
+                <div class="form-group ml-2 mr-2">
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fas fa-search"></i> 查询</button>
+                </div>
+            </form>
+            <a href="useradd.html" class="btn btn-sm btn-primary mr-4"><i class="fas fa-plus"></i> 添加用户</a>
+        </div>
+        <div class="table-responsive pl-3 pr-3">
+            <table class="table table-bordered text-center table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>用户编码</th>
+                    <th>用户名称</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>电话</th>
+                    <th>用户角色</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>admin</td>
+                    <td>系统管理员</td>
+                    <td>男</td>
+                    <td>20</td>
+                    <td>13688889999</td>
+                    <td>系统管理员</td>
+                    <td class="pt-2 pb-0">
+                        <a href="userview.html" class="btn btn-sm btn-info"><i class="fas fa-comment-dots"></i></a>
+                        <a href="useradd.html" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+                        <button class="btn btn-sm btn-info"><i class="fas fa-window-close"></i></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="pl-3 pr-3 small d-flex justify-content-between">
+            <ul class="pagination">
+                <li class="page-item disabled"><a class="page-link border-0">共<span>30</span>条记录</a></li>
+                <li class="page-item"><a href="#" class="page-link border-0">首页</a></li>
+                <li class="page-item"><a href="#" class="page-link border-0">上一页</a></li>
+                <li class="page-item"><a href="#" class="page-link border-0">下一页</a></li>
+                <li class="page-item"><a href="#" class="page-link border-0">末页</a></li>
+            </ul>
+            <form action="billlist.html" method="get" class="form-inline">
+                <div class="form-group">
+                    <label for="page" class="mr-2">跳转至</label>
+                    <input type="text" class="form-control form-control-sm mr-2" id="page" name="page" style="width: 50px">
+                    <label for="page" class="mr-2">页</label>
+                    <input type="submit" value="GO" class="form-control form-control-sm mr-5">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<footer class="bg-primary p-3 text-center text-white small" style="height: 51px">版权归北大青鸟</footer>
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
